@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/bst5/css/bootstrap.min.css">
+    <script src="/bst5/js/bootstrap.min.js"></script>
+    <script src="/bst5/js/bootstrap.bundle.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="css/all.css">
+    <title>ข้อมูลอุปกรณ์</title>
+</head>
+
+<body>
+    <%- include('navbar') %>
+        <div class="d-flex">
+            <nav class="nav flex-column full-height-nav">
+                <p style="font-size: 20px; text-align: center;">
+                    <b>เมนู</b>
+                </p>
+                <% if ( type_user=='Admin' ) { %>
+                    <a class="nav-link" href="/user" style="color: #333333;">
+                        <i class="bi bi-people"></i>
+                        ข้อมูลผู้ใช้
+                    </a>
+                    <a class="nav-link" href="/category" style="color: #333333;">
+                        <i class=" bi bi-bookmarks"></i>
+                        ข้อมูลหมวดหมู่
+                    </a>
+                    <a class="nav-link" href="/device" style="color: #1a75ff; text-shadow: 0px 0px 5px #1a75ff">
+                        <i class="bi bi-cpu"></i>
+                        ข้อมูลอุปกรณ์
+                    </a>
+                    <a class="nav-link position-relative" href="/order" style="color: #333333;">
+                        <i class="bi bi-cart"></i>
+                        อนุมัติรายการ
+                    </a>
+                <% } else { %>
+                    <a class="nav-link" href="/category" style="color: #333333;">
+                        <i class="bi bi-bookmarks"></i>
+                        ข้อมูลหมวดหมู่
+                    </a>
+                    <a class="nav-link" href="/device" style="color: #1a75ff; text-shadow: 0px 0px 5px #1a75ff">
+                        <i class="bi bi-cpu"></i>
+                        ข้อมูลอุปกรณ์
+                    </a>
+                    <a class="nav-link position-relative" href="/order" style="color: #333333;">
+                        <i class="bi bi-cart"></i>
+                        รายการ
+                    </a>
+                <% } %>
+            </nav>
+            <div class="full-height"><br>
+                <div class="row">
+                    <div class="col">
+                        <h1>ข้อมูลอุปกรณ์</h1>
+                    </div>
+                    <div class="col-5" style="margin: auto;">
+                        <div style="float: right;">
+                            <% if ( type_user=='Admin' ) { %>
+                                <button type="button" class="btn bt-add me-1" data-bs-toggle="modal" data-bs-target="#ModalAddDevice">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" fill="currentColor" class="bi bi-cpu" viewBox="0 0 16 16">
+                                        <path d="M5 0a.5.5 0 0 1 .5.5V2h1V.5a.5.5 0 0 1 1 0V2h1V.5a.5.5 0 0 1 1 0V2h1V.5a.5.5 0 0 1 1 0V2A2.5 2.5 0 0 1 14 4.5h1.5a.5.5 0 0 1 0 1H14v1h1.5a.5.5 0 0 1 0 1H14v1h1.5a.5.5 0 0 1 0 1H14v1h1.5a.5.5 0 0 1 0 1H14a2.5 2.5 0 0 1-2.5 2.5v1.5a.5.5 0 0 1-1 0V14h-1v1.5a.5.5 0 0 1-1 0V14h-1v1.5a.5.5 0 0 1-1 0V14h-1v1.5a.5.5 0 0 1-1 0V14A2.5 2.5 0 0 1 2 11.5H.5a.5.5 0 0 1 0-1H2v-1H.5a.5.5 0 0 1 0-1H2v-1H.5a.5.5 0 0 1 0-1H2v-1H.5a.5.5 0 0 1 0-1H2A2.5 2.5 0 0 1 4.5 2V.5A.5.5 0 0 1 5 0m-.5 3A1.5 1.5 0 0 0 3 4.5v7A1.5 1.5 0 0 0 4.5 13h7a1.5 1.5 0 0 0 1.5-1.5v-7A1.5 1.5 0 0 0 11.5 3zM5 6.5A1.5 1.5 0 0 1 6.5 5h3A1.5 1.5 0 0 1 11 6.5v3A1.5 1.5 0 0 1 9.5 11h-3A1.5 1.5 0 0 1 5 9.5zM6.5 6a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5z"/>
+                                    </svg>
+                                    เพิ่มข้อมูล
+                                </button>
+                                <button type="button" class="btn btn-danger me-1" data-bs-toggle="modal" data-bs-target="#MultiDelete" style="white-space: nowrap;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                        <path fill-rule="evenodd"d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                                    </svg>
+                                    ลบข้อมูล
+                                </button>
+                                <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#Report">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-filetype-pdf" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M14 4.5V14a2 2 0 0 1-2 2h-1v-1h1a1 1 0 0 0 1-1V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v9H2V2a2 2 0 0 1 2-2h5.5L14 4.5ZM1.6 11.85H0v3.999h.791v-1.342h.803c.287 0 .531-.057.732-.173.203-.117.358-.275.463-.474a1.42 1.42 0 0 0 .161-.677c0-.25-.053-.476-.158-.677a1.176 1.176 0 0 0-.46-.477c-.2-.12-.443-.179-.732-.179Zm.545 1.333a.795.795 0 0 1-.085.38.574.574 0 0 1-.238.241.794.794 0 0 1-.375.082H.788V12.48h.66c.218 0 .389.06.512.181.123.122.185.296.185.522Zm1.217-1.333v3.999h1.46c.401 0 .734-.08.998-.237a1.45 1.45 0 0 0 .595-.689c.13-.3.196-.662.196-1.084 0-.42-.065-.778-.196-1.075a1.426 1.426 0 0 0-.589-.68c-.264-.156-.599-.234-1.005-.234H3.362Zm.791.645h.563c.248 0 .45.05.609.152a.89.89 0 0 1 .354.454c.079.201.118.452.118.753a2.3 2.3 0 0 1-.068.592 1.14 1.14 0 0 1-.196.422.8.8 0 0 1-.334.252 1.298 1.298 0 0 1-.483.082h-.563v-2.707Zm3.743 1.763v1.591h-.79V11.85h2.548v.653H7.896v1.117h1.606v.638H7.896Z"/>
+                                    </svg>
+                                </button>
+                            <% } %>
+                            <% if ( type_user=='User' ) { %>
+                                <button type="button" class="btn bt-add" data-bs-toggle="modal" data-bs-target="#modal-add-orders" style="white-space: nowrap;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send-plus" viewBox="0 0 16 16">
+                                        <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855a.75.75 0 0 0-.124 1.329l4.995 3.178 1.531 2.406a.5.5 0 0 0 .844-.536L6.637 10.07l7.494-7.494-1.895 4.738a.5.5 0 1 0 .928.372l2.8-7Zm-2.54 1.183L5.93 9.363 1.591 6.602l11.833-4.733Z"/>
+                                        <path d="M16 12.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Zm-3.5-2a.5.5 0 0 0-.5.5v1h-1a.5.5 0 0 0 0 1h1v1a.5.5 0 0 0 1 0v-1h1a.5.5 0 0 0 0-1h-1v-1a.5.5 0 0 0-.5-.5Z"/>
+                                    </svg>
+                                    เพิ่มอุปกรณ์ลงในรายการ
+                                </button>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <br>
+                <form action="/search-device" method="post">
+                    <div class="mb-3" style="display: flex; flex-wrap: wrap; align-items: center;">
+                        <div>
+                            <label style="margin-bottom: 10px;">ค้นหารหัสอุปกรณ์</label>
+                            <input class="form-control me-2" type="search" name="search" aria-label="Search" style="flex: 0 0 auto; width: 300px;">    
+                        </div>
+                        <div style="display: flex; flex-wrap: wrap; align-items: center; margin-top: 35px;">
+                            <select class="form-select" name="categoryId" aria-label="Default select example" style="flex: 0 0 auto; width: 200px; margin-right: 10px;">
+                                <option value="" selected>--- เลือกหมวดหมู่ ---</option>
+                                <% Object.values(categorys).forEach(function(item){%>
+                                    <option value="<%= item._id %>">
+                                        <%= item.CategoryName %>
+                                    </option>
+                                <% }) %>
+                            </select>
+                            <button class="btn" style="background-color: #0073e6; color: white; white-space: nowrap; flex: 0 0 auto;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                                </svg>
+                                ค้นหา
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <br>
+                <% if ( AddOrderFail ) { %>
+                    <div class="alert alert-danger" role="alert" style="text-align: center;">
+                        <i class="bi bi-exclamation-triangle" style="margin-right: 10px;"></i>
+                        มีอุปกรณ์ซ้ำอยู่รายการ
+                    </div>
+                <% } %>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>รหัสอุปกรณ์</th>
+                            <th>ชื่ออุปกรณ์</th>
+                            <th>ประเภท</th>
+                            <th style="text-align: center;">สถานะอุปกรณ์</th>
+                            <th>วันที่เพิ่ม</th>
+                            <th>วันที่จำหน่าย</th>
+                            <th>รูปภาพ</th>
+                            <th></th>
+                            <% if ( type_user=='Admin' ) { %>
+                                <th>
+                                    <input class="form-check-input" type="checkbox" onclick="CheckAll(this);">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-check-all" viewBox="0 0 16 16">
+                                        <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"/>
+                                    </svg>
+                                </th>
+                            <% } else { %>
+                                <th>
+                                    <input class="form-check-input" type="checkbox" onclick="CheckAllAddOrders(this)">
+                                </th>
+                            <% } %>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% Object.values(devices).forEach(function(item,i){%>
+                        <tr>
+                            <td style="text-align: center;"  ><%= order++ %></td>
+                            <td style="text-align: center;"><%= item.DeviceID %></td>
+                            <td ><%= item.DeviceName %></td>
+                            <td >
+                                <% for(var i=0; i < categorys.length; i++) {%>
+                                    <% if (categorys[i]._id.toString() == item.CategoryID.toString()) { %>
+                                        <%= categorys[i].CategoryName %>
+                                        <% break; %>
+                                    <% } %>
+                                <% } %>
+                            </td>
+                            <td style="text-align: center;">
+                                <% if (item.Status == '00' ) { %>
+                                    <span class="badge rounded-pill bg-primary">
+                                        ไม่ได้ใช้งาน
+                                    </span>
+                                <% } else if (item.Status == '02' ) { %>
+                                    <span class="badge rounded-pill bg-warning" style="color: black;">
+                                        อยู่ระหว่างทำรายการเบิก
+                                    </span>
+                                <% } else if (item.Status == '03' ) { %>
+                                    <span class="badge rounded-pill bg-success">
+                                        กำลังใช้งาน
+                                    </span>
+                                <% } else { %>
+                                    <span class="badge rounded-pill bg-danger">
+                                        เลิกใช้งาน
+                                    </span>
+                                <% } %>
+                            </td>
+                            <td  style="text-align: center;"><%= item.DateAdd.toLocaleString('th-TH').substring(0, 9) %></td>
+                            <td style="text-align: center;">
+                                <% if (item.DateDispose) { %>
+                                    <%= item.DateDispose.toLocaleString('th-TH').substring(0, 9) %>
+                                <% } %>
+                            </td>
+                            <td style="text-align: center;">
+                                <img id="deviceImg" src="/uploadsIMG/devices/<%= item.DeviceImg %>" style="width: 5cm; height: 5cm;">
+                            </td>
+                            <td>
+                                <% if ( type_user =='Admin' && item.Status == 00) { %>
+                                    <a class="btn btn-outline-warning" href="/dispose/<%= item._id %>"
+                                        onclick="return confirm('ต้องการที่จะจำหน่ายอุปกรณ์ ?')" style="border: none;">
+                                        จำหน่าย
+                                    </a>
+                                <% } %>
+                            </td>
+                            <% if ( type_user=='Admin' ) { %>
+                                <td>
+                                    <div class="button-container">
+                                        <button class="btn edit-device" type="button" data-bs-toggle="modal" data-bs-target="#ModalEditDevice"
+                                            data-id="<%= item._id %>"
+                                            data-showid="<%= item.DeviceID %>"
+                                            data-devicename="<%= item.DeviceName %>"
+                                            data-dateadd="<%= JSON.stringify(item.DateAdd).substring(1, 11); %>"
+                                            data-status="<%= item.Status %>"
+                                            data-type="<%= item.CategoryID %>">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                            </svg>
+                                        </button>
+                                        <a class="btn" href="/delete_device/<%= item._id %>" onclick="return confirm('ต้องการที่จะลบข้อมูล ?')">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash"
+                                                viewBox="0 0 16 16">
+                                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                                <path fill-rule="evenodd"d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                                            </svg>
+                                        </a>
+                                        <form>
+                                            <input class="form-check-input check-delete" type="checkbox" value="<%= item._id %>" onclick="checkDelete();">
+                                            <label class="form-check-label" for="flexCheckDefault"></label>
+                                        </form>
+                                    </div>
+                                </td>
+                            <% } else if (item.Status == 00 && !item.DateDispose) { %>
+                                <td style="text-align: center;">
+                                    <div class="button-container">
+                                        <button class="btn add-order" type="button" data-bs-toggle="modal" data-bs-target="#modal-add-order" data-add_id="<%= item._id %>">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-plus" viewBox="0 0 16 16">
+                                                <path d="M9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0 1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9V5.5z"/>
+                                                <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                                            </svg>
+                                        </button>
+                                        <input class="form-check-input check-add-orders" type="checkbox" value="<%= item._id %>" onclick="checkAddOrders();">
+                                    </div>
+                                </td>
+                            <% } else { %>
+                                <td></td>
+                            <% } %>
+                        </tr>
+                        <% }) %>
+                        <form action="/MultiDeleteDevice" method="post" id="gg">
+                            <input class="form-check-input" id="deleteArray" name="deleteArray" type="text" style="display: none">
+                        </form>
+                    </tbody>
+                </table>
+                <!-- Modal Add Order -->
+                <div class="modal fade" id="modal-add-order" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">ขอใช้งานอุปกรณ์</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="/add-order" class="needs-validation" novalidate method="post" id="add-order">
+                                    <input id="input_id_toOrder" type="text" name="device_id" hidden>
+                                    <div class="modal-body" style="text-align: center;">
+                                        ต้องการขอใช้งานอุปกรณ์หรือไม่
+                                        <i class="bi bi-cpu"></i>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                                <button type="submit" class="btn btn-danger" form="add-order">ตกลง</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal Add Orders -->
+                <div class="modal fade" id="modal-add-orders" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">เพิ่มรายการ</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="/add-orders" method="post" id="add-orders">
+                                    <input id="addArray" name="addArray" type="text" hidden>
+                                    <div class="modal-body" style="text-align: center;">
+                                        ต้องการเพิ่มอุปกรณ์ลงในรายการหรือไม่
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                                <button type="submit" class="btn btn-danger" form="add-orders">ตกลง</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal Add Device -->
+                <div class="modal fade" id="ModalAddDevice" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">เพิ่มอุปกรณ์</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="insertDevice" action="/addDevice" method="post" enctype="multipart/form-data">
+                                    <div class="row mb-4">
+                                        <div class="col">
+                                            <label class="form-label">ชื่ออุปกรณ์</label>
+                                            <input type="text" class="form-control" name="device_name" required>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">รูปภาพ</label>
+                                            <input id="img" class="form-control" type="file" name="image">
+                                        </div>
+                                    </div>
+                                    <div class="row mb-4">
+                                        <div class="col">
+                                            <label class="form-label">หมวดหมู่</label>
+                                            <select class="form-select" name="category_id" aria-label="Default select example" required>
+                                                <option value="" selected>--- เลือกหมวดหมู่ ---</option>
+                                                <% Object.values(categorys).forEach(function(item){%>
+                                                    <option value="<%= item._id %>">
+                                                        <%= item.CategoryName %>
+                                                    </option>
+                                                <% }) %>
+                                            </select>
+                                        </div>
+                                        <div class="col col-5">
+                                            <label class="form-label">วันที่เพิ่มข้อมูล</label>
+                                            <input class="form-control" value="<%= JSON.stringify(date).substring(1, 11); %>" type="date" name="date" readonly>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ยกเลิก</button>
+                                <button type="submit" class="btn btn-primary" form="insertDevice">บันทึก</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal Edit Device -->
+                <div class="modal fade" id="ModalEditDevice" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">แก้ไขข้อมูลอุปกรณ์</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="edit-device" action="/EditDevice" method="post" enctype="multipart/form-data">
+                                    <div class="row mb-4">
+                                        <label class="col-3 col-form-label">รหัสอุปกรณ์ :</label>
+                                        <div class="col">
+                                            <input id="input_id" type="text" class="form-control" name="device_id" readonly style="display: none;">
+                                            <input id="showID" type="text" class="form-control" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-4">
+                                        <div class="col">
+                                            <label class="form-label">ชื่ออุปกรณ์</label>
+                                            <input id="input_devicename" type="text" class="form-control" name="device_name" required>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="mb-3">
+                                            <label class="form-label">รูปภาพ</label>
+                                            <input id="img" class="form-control" type="file" name="image">
+                                        </div>
+                                    </div>
+                                    <div class="row mb-4">
+                                        <div class="col">
+                                            <label class="form-label">หมวดหมู่</label>
+                                            <select id="input_type" class="form-select" name="category_id" aria-label="Default select example" required>
+                                                <option value="" >--- เลือกหมวดหมู่ ---</option>
+                                                <% Object.values(categorys).forEach(function(item){%>
+                                                    <option value="<%= item._id %>">
+                                                        <%= item.CategoryName %>
+                                                    </option>
+                                                <% }) %>
+                                            </select>
+                                        </div>
+                                        <div class="col col-5">
+                                            <label class="form-label">วันที่เพิ่มข้อมูล</label>
+                                            <input id="input_dateadd" class="form-control" type="date" name="dateadd" readonly>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ยกเลิก</button>
+                                <button type="submit" class="btn btn-primary" form="edit-device">บันทึก</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal MultiDelete -->
+                <div class="modal fade" id="MultiDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">ลบหมวดหมู่</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body" style="text-align: center;">
+                                ต้องการลบข้อมูลหรือไม่
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                                <input class="btn btn-danger" type="submit" value="ตกลง" form="gg">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal Report -->
+                <div class="modal fade" id="Report" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">ออกรายงาน</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="report-devices" target="_blank" action="/report-devices" method="post">
+                                    <label class="form-label" style="margin-right: 20px;">รายการสถานะ</label>
+                                    <div style="margin-left: 30px; margin-top: 5px;">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="report" value="" id="" checked>
+                                            <label class="form-check-label" for="report1">
+                                                ทั้งหมด
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="report" value="00" id="">
+                                            <label class="form-check-label" for="report1">
+                                                ไม่ได้ใช้งาน
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="report" value="01" id="">
+                                            <label class="form-check-label" for="report2">
+                                                เลิกใช้งาน
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="report" value="02" id="">
+                                            <label class="form-check-label" for="report2">
+                                                ระหว่างทำรายการ
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="report" value="03" id="">
+                                            <label class="form-check-label" for="report2">
+                                                กำลังใช้งาน
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col">
+                                            <label class="form-label">เริ่มวันที่</label>
+                                            <input class="form-control" value="<%= JSON.stringify(today).substring(1, 11); %>" type="date" name="startDate">
+                                        </div>
+                                        <div class="col">
+                                            <label class="form-label">ถึงวันที่</label>
+                                            <input class="form-control" value="<%= JSON.stringify(today).substring(1, 11); %>" type="date" name="endDate">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <input class="btn btn-danger" type="submit" value="PDF" form="report-devices">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal MultiDelete -->
+                <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">เพิ่มข้อมูล</h5>
+                                <button id="closeModalBtn" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body" style="text-align: center;">
+                                เพิ่มข้อมูลสำเร็จ
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</body>
+
+<script>
+    $(document).on("click", ".add-order", function () {
+        let device_id_toOrder = $(this).data('add_id');
+
+        $('#input_id_toOrder').val(device_id_toOrder);
+    })
+
+    $(document).on("click", ".edit-device", function () {
+        let device_id = $(this).data('id');
+        let deviceID = $(this).data('showid');
+        let update_deviename = $(this).data('devicename');
+        let update_dateadd = $(this).data('dateadd');
+        let update_status = $(this).data('status');
+        let update_type = $(this).data('type');
+
+        $('#input_id').val(device_id);
+        $('#showID').val(deviceID);
+        $('#input_devicename').val(update_deviename);
+        $('#input_dateadd').val(update_dateadd);
+        $('#input_status').val(update_status);
+        $('#input_type').val(update_type);
+    })
+
+    function CheckAll(source) {
+        var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i] != source)
+            {
+                checkboxes[i].checked = source.checked;
+            }
+        }
+        var checkedValue = []; 
+        checkboxes.forEach(item => {
+            checkedValue.push(item.value);
+        });
+        !source.checked ? document.getElementById('deleteArray').value = '' : document.getElementById('deleteArray').value = checkedValue.slice(1);
+    }
+    function checkDelete() {
+        var checkedValue = []; 
+        const a = document.querySelectorAll('.check-delete:checked')
+        a.forEach(item => {
+            checkedValue.push(item.value);
+        });
+        document.getElementById('deleteArray').value = checkedValue
+    }
+
+    function CheckAllAddOrders(source) {
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach(checkbox => {
+            if (checkbox !== source) {
+                checkbox.checked = source.checked;
+            }
+        });
+        const checkedValue = Array.from(checkboxes, item => item.value);
+        document.getElementById('addArray').value = source.checked ? checkedValue.slice(1) : '';
+    }
+    function checkAddOrders() {
+        const checkedValue = Array.from(document.querySelectorAll('.check-add-orders:checked'), item => item.value);
+        document.getElementById('addArray').value = checkedValue;
+    }
+
+</script>
+
+</html>

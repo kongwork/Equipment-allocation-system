@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/bst5/css/bootstrap.min.css">
+    <script src="/bst5/js/bootstrap.min.js"></script>
+    <script src="/bst5/js/bootstrap.bundle.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/all.css">
+    <title>ประวัติรายการ</title>
+</head>
+
+<body>
+    <%- include('navbar') %>
+        <div class="d-flex">
+            <nav class="nav flex-column full-height-nav">
+                <p style="font-size: 20px; text-align: center;">
+                    <b>เมนู</b>
+                </p>
+                <% if(type_user=='Admin'){ %>
+                <a class="nav-link" href="/user" style="color: #333333;">
+                    <i class="bi bi-people"></i>
+                    ข้อมูลผู้ใช้
+                </a>
+                <a class="nav-link" href="/category" style="color: #333333;">
+                    <i class="bi bi-bookmarks"></i>
+                    ข้อมูลหมวดหมู่
+                </a>
+                <a class="nav-link" href="/device" style="color: #333333;">
+                    <i class="bi bi-cpu"></i>
+                    ข้อมูลอุปกรณ์
+                </a>
+                <a class="nav-link position-relative" href="/order" style="color: #1a75ff; text-shadow: 0px 0px 5px #1a75ff">
+                    <i class="bi bi-cart"></i>
+                    อนุมัติรายการ
+                </a>
+                <% } else { %>
+                    <a class="nav-link" href="/category" style="color: #333333;">
+                        <i class="bi bi-bookmarks"></i>
+                        ข้อมูลหมวดหมู่
+                    </a>
+                    <a class="nav-link" href="/device" style="color: #333333;">
+                        <i class="bi bi-cpu"></i>
+                        ข้อมูลอุปกรณ์
+                    </a>
+                    <a class="nav-link position-relative" href="/order" style="color: #1a75ff; text-shadow: 0px 0px 5px #1a75ff">
+                        <i class="bi bi-cart"></i>
+                        อนุมัติรายการ
+                    </a>
+                <% } %>
+            </nav>
+            <div class="full-height">
+                <br>
+                <div class="row">
+                    <div class="col">
+                        <% if(type_user=='Admin'){ %>
+                            <h1>อนุมัติรายการ</h1>
+                        <% } else { %>
+                            <h1>ประวัติการเบิก</h1>
+                        <% } %>
+                    </div>
+                </div>
+                <hr>
+                <br>
+                <% if ( type_user=='Admin' ) { %>
+                    <form class="d-flex" action="/search-order" method="post">
+                        <div class="mb-3">
+                            <label>ค้นหารหัสรายการ</label>
+                            <div style="display: flex; flex-flow: row wrap;">
+                                <input class="form-control me-2" type="search" name="search" aria-label="Search" style="width: 300px;">
+                                <button class="btn" style="background-color: #0073e6; color: white; white-space: nowrap;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                                    </svg>
+                                    ค้นหา
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <br>
+                <% } else { %>
+                    <div class="btn-group" style="width: 100%; margin-bottom: 30px;">
+                        <a href="/order" class="btn btn-outline-primary">รายการเบิก</a>
+                        <a href="#" class="btn btn-primary active" aria-current="page">ประวัติการเบิกของฉัน</a>
+                    </div>
+                <% } %>
+                <table class="table">
+                    <thead>
+                        <% if ( orders!='' ) { %>
+                            <tr>
+                                <th style="width: 3%; text-align: center;">#</th>
+                                <th>รหัสรายการ</th>
+                                <th>รหัสอุปกรณ์</th>
+                                <th>ชื่ออุปกรณ์</th>
+                                <th>ประเภท</th>
+                                <th>สถานะ</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        <% } else { %>
+                            <div class="alert alert-danger " role="alert" style="text-align: center">
+                                <i class="bi bi-exclamation-triangle"></i>
+                                <strong>Warning!</strong> ไม่มีข้อมูล
+                            </div>
+                        <% } %>
+                    </thead>
+                    <tbody>
+                        <% let no = 1 %>
+                        <% Object.values(orders).forEach(function(item){%>
+                            <tr>
+                                <td style="text-align: center;"><%= no++ %></td>
+                                <td style="text-align: center; width: 23%;"><%= item.OrderID %></td>
+                                <td style="text-align: center; width: 23%;">
+                                    <% Object.values(item.DeviceID).forEach(function(obj){%>
+                                        <% Object.values(device).forEach(function(i){%>
+                                            <% if(obj._id.toString() == i._id.toString()){ %>
+                                                <%= i.DeviceID %><br>
+                                            <% } %>
+                                        <% }) %>
+                                    <% }) %>
+                                </td>
+                                <td style="text-align: center;">
+                                    <% Object.values(item.DeviceID).forEach(function(obj){%>
+                                        <% Object.values(device).forEach(function(i){%>
+                                            <% if(obj._id.toString() == i._id.toString()){ %>
+                                                <%= i.DeviceName %><br>
+                                            <% } %>
+                                        <% }) %>
+                                    <% }) %>
+                                </td>
+                                <td style="text-align: center;">
+                                    <% Object.values(item.DeviceID).forEach(function(obj){%>
+                                        <% Object.values(device).forEach(function(i){%>
+                                            <% if(obj._id.toString() == i._id.toString()){ %>
+                                                <%= i.CategoryID.CategoryName %><br>
+                                            <% } %> 
+                                        <% }) %>
+                                    <% }) %>
+                                </td>
+                                <td style="text-align: center;">
+                                    <% if (item.Status == '01' ) { %>
+                                        <span class="badge rounded-pill bg-warning">
+                                            รออนุมัติ
+                                        </span>
+                                    <% } else if (item.Status == '02' ) { %>
+                                        <span class="badge rounded-pill bg-success">
+                                            อนุมัติ
+                                        </span>
+                                    <% } else if (item.Status == '04' ) { %>
+                                        <span class="badge rounded-pill bg-info" style="color: black;">
+                                            คืนแล้ว
+                                        </span>
+                                    <% } else { %>
+                                        <span class="badge rounded-pill bg-danger">
+                                            ยกเลิก
+                                        </span>
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <% if (type_user=='User' && item.Status == '01') { %>
+                                        <button class="btn btn-outline-danger btn-sm cancel-order" type="button" data-bs-toggle="modal" data-bs-target="#modal-cancel-order" data-id="<%= item._id %>">
+                                            ยกเลิก
+                                        </button>
+                                    <% } else if (type_user=='Admin' && item.Status == '01') { %>
+                                        <button class="btn btn-outline-success btn-sm cancel-order" type="button" data-bs-toggle="modal" data-bs-target="#modal-cancel-order" data-id="<%= item._id %>">
+                                            อนุมัติ
+                                        </button>
+                                    <% } %>
+                                </td>
+                                <td style="text-align: center;">
+                                    <div class="button-container">
+                                        <% if (type_user=='Admin' && item.Status == 02) { %>
+                                            <button class="btn btn-outline-success btn-sm returnDevices" type="button" data-bs-toggle="modal" data-bs-target="#modal-returnDevices" data-orderid="<%= item._id %>">
+                                                คืน
+                                            </button>
+                                        <% } %>
+                                        <% if (item.Status == 02 || item.Status == 04) { %>
+                                            <a href="/report-order/<%= item._id %>" class="btn btn-sm btn-outline-danger" target="_blank">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-filetype-pdf" viewBox="0 0 16 16">
+                                                    <path fill-rule="evenodd" d="M14 4.5V14a2 2 0 0 1-2 2h-1v-1h1a1 1 0 0 0 1-1V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v9H2V2a2 2 0 0 1 2-2h5.5L14 4.5ZM1.6 11.85H0v3.999h.791v-1.342h.803c.287 0 .531-.057.732-.173.203-.117.358-.275.463-.474a1.42 1.42 0 0 0 .161-.677c0-.25-.053-.476-.158-.677a1.176 1.176 0 0 0-.46-.477c-.2-.12-.443-.179-.732-.179Zm.545 1.333a.795.795 0 0 1-.085.38.574.574 0 0 1-.238.241.794.794 0 0 1-.375.082H.788V12.48h.66c.218 0 .389.06.512.181.123.122.185.296.185.522Zm1.217-1.333v3.999h1.46c.401 0 .734-.08.998-.237a1.45 1.45 0 0 0 .595-.689c.13-.3.196-.662.196-1.084 0-.42-.065-.778-.196-1.075a1.426 1.426 0 0 0-.589-.68c-.264-.156-.599-.234-1.005-.234H3.362Zm.791.645h.563c.248 0 .45.05.609.152a.89.89 0 0 1 .354.454c.079.201.118.452.118.753a2.3 2.3 0 0 1-.068.592 1.14 1.14 0 0 1-.196.422.8.8 0 0 1-.334.252 1.298 1.298 0 0 1-.483.082h-.563v-2.707Zm3.743 1.763v1.591h-.79V11.85h2.548v.653H7.896v1.117h1.606v.638H7.896Z" />
+                                                </svg>
+                                            </a>
+                                        <% } %>
+                                    </div>
+                                </td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+                <!-- Modal Return Device -->
+                <div class="modal fade" id="modal-returnDevices" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                คืนอุปกรณ์
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="/returnDevices" class="needs-validation" novalidate method="post" id="returnDevices">
+                                    <input id="orderId" type="text" name="orderId">
+                                    <div class="modal-body" style="text-align: center;">
+                                        ต้องการคืนอุปกรณ์หรือไม่
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                                <button type="submit" class="btn btn-danger" form="returnDevices">ตกลง</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal cancel order or confirm order -->
+                <div class="modal fade" id="modal-cancel-order" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <% if(type_user=='Admin'){ %>
+                                    <h5 class="modal-title" id="exampleModalLabel">อนุมัติขอใช้งานอุปกรณ์</h5>
+                                <% } else { %>
+                                    <h5 class="modal-title" id="exampleModalLabel">ยกเลิกขอใช้งานอุปกรณ์</h5>
+                                <% } %>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="/cancel-order" class="needs-validation" novalidate method="post" id="cancel-order">
+                                    <input id="order_id" type="text" name="order_id" style="display: none;">
+                                    <div class="modal-body" style="text-align: center;">
+                                        <% if(type_user=='Admin'){ %>
+                                            ต้องการอนุมัติหรือไม่
+                                        <% } else { %>
+                                            ต้องการยกเลิกหรือไม่
+                                        <% } %>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                                <button type="submit" class="btn btn-danger" form="cancel-order">ตกลง</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal Report -->
+                <div class="modal fade" id="Report" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Report my history withdraw</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="report-dispose-device" target="_blank" action="/report-my-history-withdraw" method="post">
+                                    <div class="row">
+                                        <div class="col">
+                                            <label class="form-label">Start date</label>
+                                            <input class="form-control" value="<%= JSON.stringify(today).substring(1, 11); %>" type="date" name="start_date">
+                                        </div>
+                                        <div class="col">
+                                            <label class="form-label">End date</label>
+                                            <input class="form-control" value="<%= JSON.stringify(today).substring(1, 11); %>" type="date" name="end_date">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <input class="btn btn-danger" type="submit" value="PDF" form="report-dispose-device">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</body>
+
+<script>
+    $(document).on("click", ".returnDevices", function () {
+        let orderId = $(this).data('orderid');
+
+        $('#orderId').val(orderId);
+    });
+
+    $(document).on("click", ".cancel-order", function () {
+        let order_id = $(this).data('id');
+
+        $('#order_id').val(order_id);
+    });
+</script>
+
+</html>

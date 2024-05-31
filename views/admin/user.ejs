@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/bst5/css/bootstrap.min.css">
+    <script src="/bst5/js/bootstrap.min.js"></script>
+    <script src="/bst5/js/bootstrap.bundle.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="/css/all.css">
+    <title>จัดการข้อมูลผู้ใช้</title>
+</head>
+
+<body>
+    <%- include('navbar') %>
+        <div class="d-flex">
+            <nav class="nav flex-column full-height-nav">
+                <p style="font-size: 20px; text-align: center;">
+                    <b>เมนู</b>
+                </p>
+                <a class="nav-link nav-hl" href="/user">
+                    <i class="bi bi-people" style="margin-top: 10px;"></i>
+                    ข้อมูลผู้ใช้
+                </a>
+                <a class="nav-link" href="/category" style="color: #333333;">
+                    <i class=" bi bi-bookmarks"></i>
+                    ข้อมูลหมวดหมู่
+                </a>
+                <a class="nav-link" href="/device" style="color: #333333;">
+                    <i class="bi bi-cpu"></i>
+                    ข้อมูลอุปกรณ์
+                </a>
+                <a class="nav-link position-relative" href="/order" style="color: #333333;">
+                    <i class="bi bi-cart"></i>
+                    อนุมัติรายการ
+                </a>
+            </nav>
+            <div class="full-height">
+                <br>
+                <div class="row">
+                    <div class="col">
+                        <h1>ข้อมูลผู้ใช้</h1>
+                    </div>
+                    <div class="col-5" style="margin: auto;">
+                        <% if ( type_user=='Admin' ) { %>
+                            <div style="float: right;">
+                                <button type="button" class="btn bt-add me-1" data-bs-toggle="modal" data-bs-target="#ModalAddUser">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" fill="currentColor" class="bi bi-person-plus" viewBox="0 0 16 16">
+                                        <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+                                        <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
+                                    </svg>
+                                    เพิ่มผู้ใช้
+                                </button>
+                                <button id="show" type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#MultiDelete">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" fill="currentColor" class="bi bi-person-dash" viewBox="0 0 16 16">
+                                        <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+                                        <path fill-rule="evenodd" d="M11 7.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5z"/>
+                                    </svg>
+                                    ลบผู้ใช้
+                                </button>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+                <hr>
+                <br>
+                <form class="d-flex" action="/user/search" method="post">
+                    <div class="mb-3">
+                        <label>ค้นหาชื่อผู้ใช้งาน</label>
+                        <div style="display: flex; flex-flow: row wrap;">
+                            <input class="form-control me-2" type="search" name="search" aria-label="Search" style="width: 300px;">
+                            <button class="btn" style="background-color: #0073e6; color: white; white-space: nowrap;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                                </svg>
+                                ค้นหา
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <br>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>ชื่อ นามสกุล</th>
+                            <th>ชื่อผู้ใช้</th>
+                            <th>อีเมล</th>
+                            <th>เบอร์โทร</th>
+                            <th>สถานะ</th>
+                            <th>
+                                รูปภาพ
+                            </th>
+                            <% if ( type_user=='Admin' ) { %>
+                                <th></th>
+                                <th></th>
+                                <th>
+                                    <input class="form-check-input" type="checkbox" onclick="CheckAll(this);">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-check-all" viewBox="0 0 16 16">
+                                        <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"/>
+                                    </svg>
+                                </th>
+                            <% } %>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% Object.values(users).forEach(function(item,i){%>
+                        <tr>
+                            <td style="text-align: center;"><%= order++ %></td>
+                            <td><%= item.Prefix %> <%= item.FirstName %> <%= item.LastName %></td>
+                            <td><%= item.UserName %></td>
+                            <td><%= item.Email %></td>
+                            <td><%= item.PhoneNumber %></td>
+                            <td>
+                                <% if ( item.TypeUser == '00' ) { %>
+                                    Admin
+                                <% } else { %>
+                                    User
+                                <% } %>
+                            </td>
+                            <td style="text-align: center;">
+                                <img src="/uploadsIMG/user/<%= item.UserImg %>" style="width: 4cm; height: 5cm;">
+                            </td>
+                            <% if ( type_user == 'Admin' ) { %>
+                                <td>
+                                    <button class="btn edit-user" type="button" data-bs-toggle="modal" data-bs-target="#ModalEditUser"
+                                        data-id="<%= item._id %>"
+                                        data-prefix="<%= item.Prefix %>"
+                                        data-firstname="<%= item.FirstName %>"
+                                        data-lastname="<%= item.LastName %>"
+                                        data-username="<%= item.UserName %>"
+                                        data-email="<%= item.Email %>"
+                                        data-phone="<%= item.PhoneNumber %>"
+                                        data-typeuser="<%= item.TypeUser %>">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                        </svg>
+                                    </button>
+                                </td>
+                                <td>
+                                    <a class="btn" href="/delete_user/<%= item._id %>" onclick="return confirm('ต้องการที่จะลบข้อมูล ?')">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash"
+                                            viewBox="0 0 16 16">
+                                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                            <path fill-rule="evenodd"d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                                        </svg>
+                                    </a>
+                                </td>
+                                <td>
+                                    <form>
+                                        <input class="form-check-input check-delete" type="checkbox" name='StockID-<%= i %>' value="<%= item._id %>" onclick="checkDelete();">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                        </label>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
+                                            <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                                        </svg>
+                                    </form>
+                                </td>
+                            <% } %>
+                        </tr>
+                        <% }) %>
+                        <form action="/MultiDelete" method="post" id="gg">
+                            <input class="form-check-input" id="deleteArray" name="deleteArray" type="text" style="display: none">
+                        </form>
+                    </tbody>
+                </table>
+                <!-- Modal Add User -->
+                <div class="modal fade modal-lg" id="ModalAddUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">เพิ่มผู้ใช้งาน</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="/InsertUser" method="post" id="InsertUser" enctype="multipart/form-data">
+                                    <div class="row">
+                                        <div class="mb-3">
+                                            <label class="form-label">ประเภทผู้ใช้งาน</label>
+                                            <select class="form-select" name="TypeUser" aria-label="Default select example">
+                                                <option value="00" selected>Admin</option>
+                                                <option value="01">User</option>
+                                            </select>
+                                        </div>
+                                        <div class="row">
+                                            <div class="mb-3">
+                                                <label class="form-label">รูปภาพ</label>
+                                                <input id="img" class="form-control" type="file" name="image">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-2 mb-3">
+                                                <label class="form-label">คำนำหน้า</label>
+                                                <select class="form-select" name="Prefix" aria-label="Default select example">
+                                                    <option selected>นาย</option>
+                                                    <option >นางสาว</option>
+                                                </select>
+                                            </div>
+                                            <div class="col mb-3 input-add-u">
+                                                <label for="" class="form-label">ชื่อ</label>
+                                                <input type="text" class="form-control" name="FirstName" placeholder="จอห์น">
+                                            </div>
+                                            <div class="col mb-3 input-add-u">
+                                                <label for="" class="form-label">นามสกุล</label>
+                                                <input type="text" class="form-control" name="LastName" placeholder="ชาวไร่">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col mb-3 input-add-u">
+                                                <label for="" class="form-label">ชื่อผู้ใช้</label>
+                                                <input type="text" class="form-control" name="UserName" placeholder="namecom">
+                                            </div>
+                                            <div class="col mb-3 input-add-u">
+                                                <label for="" class="form-label">รหัสผ่าน</label>
+                                                <input id="adduser_password" type="password" class="form-control" name="Password" placeholder="*** *** ***">
+                                                <div style="text-align: justify;">
+                                                    <input type="checkbox" onclick="myFunctionAdd()"
+                                                    style="
+                                                    padding: 0;
+                                                    margin: 16px 0 0 2px;
+                                                    vertical-align: bottom;
+                                                    position: relative;
+                                                    top: -2px;
+                                                    width: 20px; height: 20px;">
+                                                    <label>แสดงรหัสผ่าน</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col mb-3 input-add-u">
+                                                <label for="" class="form-label">อีเมล</label>
+                                                <input type="email" class="form-control" id="" name="Email" placeholder="name@example.com">
+                                            </div>
+                                            <div class="col mb-3 input-add-u">
+                                                <label for="" class="form-label">เบอร์โทร</label>
+                                                <input type="tel" class="form-control" id="" name="PhoneNumber" placeholder="08*********" pattern="[0-9]{10}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ยกเลิก</button>
+                                <button type="submit" class="btn btn-primary" form="InsertUser">บันทึก</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal Edit User -->
+                <div class="modal fade modal-lg" id="ModalEditUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">แก้ไขข้อมูลผู้ใช้งาน</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="/EditUser" method="post" id="edit-user" enctype="multipart/form-data">
+                                    <input type="text" id="user_id" name="user_id" hidden>
+                                    <div class="row">
+                                        <div class="mb-3">
+                                            <label class="form-label">ประเภทผู้ใช้งาน</label>
+                                            <select name="TypeUser" class="form-select" required>
+                                                <option id="update_typeuser" selected hidden></option>
+                                                <option value="00">Admin</option>
+                                                <option value="01">User</option>
+                                            </select>
+                                        </div>
+                                        <div class="row">
+                                            <div class="mb-3">
+                                                <label class="form-label">รูปภาพ</label>
+                                                <input id="img" class="form-control" type="file" name="image">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-2 mb-3">
+                                                <label class="form-label">คำนำหน้า</label>
+                                                <select class="form-select" name="Prefix" aria-label="Default select example">
+                                                    <option id="update_prefix" selected hidden></option>
+                                                    <option>นาย</option>
+                                                    <option>นางสาว</option>
+                                                </select>
+                                            </div>
+                                            <div class="col mb-3 input-add-u">
+                                                <label for="" class="form-label">ชื่อ</label>
+                                                <input id="input_firstname" type="text" class="form-control" name="FirstName" placeholder="จอห์น">
+                                            </div>
+                                            <div class="col mb-3 input-add-u">
+                                                <label for="" class="form-label">นามสกุล</label>
+                                                <input id="update_lastname"type="text" class="form-control" name="LastName" placeholder="ชาวไร่">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col mb-3 input-add-u">
+                                                <label for="" class="form-label">ชื่อผู้ใช้</label>
+                                                <input id="update_username" type="text" class="form-control" name="UserName" placeholder="namecom">
+                                            </div>
+                                            <div class="col mb-3 input-add-u">
+                                                <label for="" class="form-label">รหัสผ่าน</label>
+                                                <input id="update_password" class="form-control" type="password" name="Password" placeholder="*** *** ***">
+                                                <div style="text-align: justify;">
+                                                    <input type="checkbox" onclick="myFunctionEdit()"
+                                                    style="
+                                                    padding: 0;
+                                                    margin: 16px 0 0 2px;
+                                                    vertical-align: bottom;
+                                                    position: relative;
+                                                    top: -2px;
+                                                    width: 20px; height: 20px;">
+                                                    <label>แสดงรหัสผ่าน</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col mb-3 input-add-u">
+                                                <label for="" class="form-label">อีเมล</label>
+                                                <input type="email" class="form-control" id="update_email" name="Email" placeholder="name@example.com">
+                                            </div>
+                                            <div class="col mb-3 input-add-u">
+                                                <label for="" class="form-label">เบอร์โทร</label>
+                                                <input type="tel" class="form-control" id="update_phone" name="PhoneNumber" placeholder="08*********" pattern="[0-9]{10}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ยกเลิก</button>
+                                <button type="submit" class="btn btn-primary" form="edit-user">บันทึก</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal MultiDelete -->
+                <div class="modal fade" id="MultiDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">
+                                    ลบข้อมูลผู้ใช้ ( Checkbox
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2-square" viewBox="0 0 16 16">
+                                        <path d="M3 14.5A1.5 1.5 0 0 1 1.5 13V3A1.5 1.5 0 0 1 3 1.5h8a.5.5 0 0 1 0 1H3a.5.5 0 0 0-.5.5v10a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5V8a.5.5 0 0 1 1 0v5a1.5 1.5 0 0 1-1.5 1.5H3z"/>
+                                        <path d="m8.354 10.354 7-7a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0z"/>
+                                    </svg> )
+                                </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body" style="text-align: center;">
+                                ต้องการลบข้อมูลหรือไม่
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                                <input class="btn btn-danger" type="submit" value="ตกลง" form="gg">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</body>
+
+<script>
+    function myFunctionAdd() {
+        var x = document.getElementById("adduser_password");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+    }
+    
+    function myFunctionEdit() {
+        var x = document.getElementById("update_password");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+    }
+
+    $(document).on("click", ".edit-user", function () {
+        let user_id = $(this).data('id');
+        let update_prefix = $(this).data('prefix');
+        let update_firstname = $(this).data('firstname');
+        let update_lastname = $(this).data('lastname');
+        let update_username = $(this).data('username');
+        let update_email = $(this).data('email');
+        let update_phone = $(this).data('phone');
+        let update_password = '';
+        let update_typeuser_id = $(this).data('typeuser');
+
+        $('#user_id').val(user_id);
+        $('#update_prefix').val(update_prefix).html(update_prefix);
+        $('#input_firstname').val(update_firstname);
+        $('#update_lastname').val(update_lastname);
+        $('#update_username').val(update_username);
+        $('#update_email').val(update_email);
+        $('#update_phone').val(update_phone);
+        $('#update_password').val(update_password);
+        $('#update_typeuser').val(update_typeuser_id).html(update_typeuser_id);
+        
+        if(update_typeuser_id === "00"){
+            $('#update_typeuser').val(update_typeuser_id).html("Admin");
+        }
+        else{
+            $('#update_typeuser').val(update_typeuser_id).html("User");
+        }
+    });
+
+    function CheckAll(source) {
+        var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i] != source)
+            {
+                checkboxes[i].checked = source.checked;
+            }
+        }
+        var checkedValue = []; 
+        checkboxes.forEach(item => {
+            checkedValue.push(item.value);
+        });
+        !source.checked ? document.getElementById('deleteArray').value = '' : document.getElementById('deleteArray').value = checkedValue.slice(1);
+    }
+    function checkDelete() {
+        var checkedValue = []; 
+        const a = document.querySelectorAll('.check-delete:checked')
+        a.forEach(item => {
+            checkedValue.push(item.value);
+        });
+        document.getElementById('deleteArray').value = checkedValue
+    }
+</script>
+
+</html>

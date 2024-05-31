@@ -1,0 +1,122 @@
+html, body{
+    height: 100%;
+    margin: 0;
+    font-family: 'Prompt', sans-serif;
+    background-color: rgb(219, 219, 219);
+}
+i {
+    font-size: 21px;
+}
+a {
+    white-space: nowrap;
+}
+th{
+    text-align: center;
+}
+thead {
+    background-color: #204060;
+    color: #e6e6e6;
+}
+.modal-footer{
+    display: flex;
+    justify-content: center;
+}
+.bt-add {
+    white-space: nowrap;
+    background-color: #00cc99;
+    color: white;
+}
+.bt-import {
+    color: black;
+    border: 1px solid black;
+}
+.bt-import:hover {
+    background-color: #cccccc;
+}
+.bt-add:hover {
+    background-color: #00b386;
+    color: white;
+}
+.center {
+    margin-left: auto;
+    margin-right: auto;
+}
+.center-2 {
+    display: block;
+    margin: auto;
+}
+.right {
+    text-align: right;
+    float: right;
+}
+.left {
+    text-align: left;
+    float: left;
+}
+.error {
+    text-align: center;
+    color: red;
+    background-color: #ffe6e6;
+}
+.input-add-u{
+    width: 500px;
+}
+td {
+  vertical-align: middle;
+}
+.text-b-t-cen {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+.text-navbar-neon {
+    margin-left: 40px;
+    margin-bottom: auto;
+    /*color: #99ff99;
+    background-color: #031321;
+    text-shadow: 0px 0px 10px #8cf8f1, 0 0 20px #8cf8f1, 0 0 80px #8cf8f1;*/
+}
+.full-height {
+    border-left-style: solid;
+    border-left-color: rgb(219, 219, 219);
+    overflow: auto;
+    height: 90vh;
+    width: 100%;
+    background-color: rgb(245, 245, 245);
+    margin-left: 16%;
+    margin-top: 80px;
+    padding: 50px;
+}
+.full-height-nav {
+    background-color: white;
+    width: 16%;
+    margin-top: 80px;
+    list-style-type: none;
+    position: fixed;
+    height: 100%;
+    padding: 25px 30px 0 30px;
+}
+.no-underline {
+    color: #3873ad;
+    text-decoration: none;
+}
+.nav-hl{
+    color: #1a75ff;
+    text-shadow: 0px 0px 5px #1a75ff
+}
+.neon-text {
+    color: #99ff99; /* สีของตัวหนังสือ (สีขาว) */
+    text-shadow: 0 0 10px #99ff99,
+                 0 0 20px #99ff99,
+                 0 0 30px #99ff99,
+                 0 0 40px #00c,
+                 0 0 70px #00c,
+                 0 0 80px #00c,
+                 0 0 100px #00c,
+                 0 0 150px #00c; /* เอฟเฟกต์แสง Neon */
+}
+.button-container {
+    display: flex; /* จัดเรียงแบบ flex */
+    align-items: center; /* จัดให้อยู่ตรงกลางในแนวตั้ง */
+    gap: 10px; /* ระยะห่างระหว่างปุ่ม */
+}
+
