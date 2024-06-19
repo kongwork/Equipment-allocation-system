@@ -61,9 +61,6 @@ thead {
 .input-add-u{
     width: 500px;
 }
-td {
-  vertical-align: middle;
-}
 .text-b-t-cen {
     margin-top: auto;
     margin-bottom: auto;
@@ -92,7 +89,7 @@ td {
     margin-top: 80px;
     list-style-type: none;
     position: fixed;
-    height: 100%;
+    height: 90%;
     padding: 25px 30px 0 30px;
 }
 .no-underline {

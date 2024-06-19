@@ -17,6 +17,7 @@
 
 <body>
     <%- include('navbar') %>
+    <%- include('modalProblem') %>
         <div class="d-flex">
             <nav class="nav flex-column full-height-nav">
                 <p style="font-size: 20px; text-align: center;">
@@ -27,7 +28,7 @@
                         <i class="bi bi-people"></i>
                         ข้อมูลผู้ใช้
                     </a>
-                    <a class="nav-link" href="/category" style="color: #1a75ff; text-shadow: 0px 0px 5px #1a75ff">
+                    <a class="nav-link" href="/category" style="color: #333333;">
                         <i class=" bi bi-bookmarks"></i>
                         ข้อมูลหมวดหมู่
                     </a>
@@ -39,12 +40,12 @@
                         <i class="bi bi-cart"></i>
                         อนุมัติรายการ
                     </a>
-                    <a class="nav-link position-relative" href="/problem" style="color: #333333;">
+                    <a class="nav-link position-relative" href="/problem" style="color: #1a75ff; text-shadow: 0px 0px 5px #1a75ff">
                         <i class="bi bi-exclamation-triangle"></i>
                         รายการปัญหา
                     </a>
                 <% } else { %>
-                    <a class="nav-link" href="/category" style="color: #1a75ff; text-shadow: 0px 0px 5px #1a75ff">
+                    <a class="nav-link" href="/category" style="color: #333333;">
                         <i class=" bi bi-bookmarks"></i>
                         ข้อมูลหมวดหมู่
                     </a>
@@ -56,7 +57,7 @@
                         <i class="bi bi-cart"></i>
                         รายการ
                     </a>
-                    <a class="nav-link position-relative" href="/problem" style="color: #333333;">
+                    <a class="nav-link position-relative" href="/problem" style="color: #1a75ff; text-shadow: 0px 0px 5px #1a75ff">
                         <i class="bi bi-exclamation-triangle"></i>
                         รายการปัญหา
                     </a>
@@ -66,17 +67,24 @@
                 <br>
                 <div class="row">
                     <div class="col">
-                        <h1>ข้อมูลหมวดหมู่</h1>
+                        <h1>ข้อมูลปัญหา</h1>
                     </div>
+                    <% if ( type_user == 'User' ) { %>
                     <div class="col-5" style="margin: auto;">
                         <div style="float: right;">
-                            <% if ( type_user=='Admin' ) { %>
-                            <button name='modal' type="button" class="btn bt-add me-1" data-bs-toggle="modal" data-bs-target="#ModalAddCategory">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
-                                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modal-problem">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-triangle" viewBox="0 0 16 16">
+                                    <path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.15.15 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.2.2 0 0 1-.054.06.1.1 0 0 1-.066.017H1.146a.1.1 0 0 1-.066-.017.2.2 0 0 1-.054-.06.18.18 0 0 1 .002-.183L7.884 2.073a.15.15 0 0 1 .054-.057m1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767z"/>
+                                    <path d="M7.002 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 5.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z"/>
                                 </svg>
-                                เพิ่มข้อมูล
+                                แจ้งปัญหา
                             </button>
+                        </div>
+                    </div>
+                    <% } %>
+                    <% if ( type_user == 'Admin' ) { %>
+                    <div class="col-5" style="margin: auto;">
+                        <div style="float: right;">
                             <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#MultiDelete">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                                     <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
@@ -84,38 +92,28 @@
                                 </svg>
                                 ลบข้อมูล
                             </button>
-                            <% } %>
                         </div>
                     </div>
+                    <% } %>
                 </div>
                 <hr>
                 <br>
-                <form class="d-flex" action="/searchCategory" method="post">
-                    <div class="mb-3">
-                        <label>ค้นหาหมวดหมู่</label>
-                        <div style="display: flex; flex-flow: row wrap;">
-                            <input class="form-control me-2" type="search" name="search" aria-label="Search" style="width: 300px;">
-                            <button class="btn" style="background-color: #0073e6; color: white; white-space: nowrap;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-                                </svg>
-                                ค้นหา
-                            </button>
-                        </div>
-                    </div>
-                </form>
                 <br>
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>#</th>
-                            <th>หมวดหมู่</th>
-                            <th style="text-align: center;">จำนวนอุปกรณ์</th>
-                            <th style="text-align: center;" hidden></th>
+                            <th style="width:3%">#</th>
+                            <th style="width:15%">ชื่อเรื่อง</th>
                             <% if ( type_user=='Admin' ) { %>
-                                <th style="text-align: center;"></th>
-                                <th style="text-align: center;"></th>
-                                <th style="text-align: center;">
+                                <th>ผู้แจ้ง</th>
+                            <% } %>
+                            <th>รายละเอียด</th>
+                            <th>การแก้ปัญหา</th>
+                            <th style="width:10%">สถานะ</th>
+                            <% if ( type_user=='Admin' ) { %>
+                                <th style="width:5%"></th>
+                                <th style="width:5%"></th>
+                                <th style="width:9%">
                                     <input class="form-check-input" type="checkbox" onclick="CheckAll(this);">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-check-all" viewBox="0 0 16 16">
                                         <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"/>
@@ -125,31 +123,32 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <% Object.values(categorys).forEach(function(item,i){%>
+                        <% Object.values(problems).forEach(function(item,i){%>
                         <tr>
                             <td style="text-align: center;"><%= order++ %></td>
-                            <td><%= item.CategoryName %></td>
+                            <td><%= item.ProblemName %></td>
+                            <% if ( type_user=='Admin' ) { %>
+                                <td><%= item.UserID.UserName %></td>
+                            <% } %>
+                            <td><%= item.ProblemDetail %></td>
+                            <td><%= item.ProblemSolving %></td>
                             <td style="text-align: center;">
-                                <% let id = item._id %>
-                                <% let num = 0 %>
-                                <% for(var i=0; i < devices.length; i++) {%>
-                                    <% if (devices[i].CategoryID.toString() == id.toString()) { %>
-                                        <% num++ %>
-                                    <% } %>
-                                <% } %>
-                                <%= num %>
-                            </td>
-                            
-                            <td style="text-align: center" hidden>
-                                <a class="btn btn-outline-primary" href="/category/device/<%= item._id %>">
-                                    อุปกรณ์
-                                </a>
+                                <% if (item.Status=='00' ) { %>
+                                    <span class="badge rounded-pill bg-secondary">
+                                        ยังไม่แก้ไข
+                                    </span>
+                                <% } else { %>
+                                    <span class="badge rounded-pill bg-success">
+                                        แก้ไขแล้ว
+                                    </span>
+                                <% } %>     
                             </td>
                             <% if ( type_user=='Admin' ) { %>
                                 <td style="text-align: center;">
-                                    <button class="btn edit-category" type="button" data-bs-toggle="modal" data-bs-target="#ModalEditCategory"
+                                    <button class="btn edit-problem" type="button" data-bs-toggle="modal" data-bs-target="#ModalEditProblem"
                                         data-id="<%= item._id %>"
-                                        data-categoryname="<%= item.CategoryName %>">
+                                        data-problemname="<%= item.ProblemName %>"
+                                        data-problemdetail="<%= item.ProblemDetail %>">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                                             <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
                                             <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
@@ -157,7 +156,7 @@
                                     </button>
                                 </td>
                                 <td style="text-align: center;">
-                                    <a class="btn" href="/delete_category/<%= item._id %>" onclick="return confirm('ต้องการที่จะลบข้อมูล ?');">
+                                    <a class="btn" href="/delete_problem/<%= item._id %>" onclick="return confirm('ต้องการที่จะลบข้อมูล ?');">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash"
                                             viewBox="0 0 16 16">
                                             <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
@@ -178,40 +177,23 @@
                             <% } %>
                         </tr>
                         <% }) %>
-                        <form action="/MultiDeleteCategory" method="post" id="gg">
+                        <form action="/MultiDeleteProblems" method="post" id="gg">
                             <input class="form-check-input" id="deleteArray" name="deleteArray" type="text" style="display: none">
                         </form>
                     </tbody>
                 </table>
-                <!-- Modal Add Category -->
-                <div class="modal fade" id="ModalAddCategory" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">เพิ่มหมวดหมู่</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form action="/InsertCategory" class="needs-validation" novalidate method="post" id="InsertCategory">
-                                    <div class="mb-3">
-                                        <label for="message-text" class="col-form-label">ชื่อหมวดหมู่ :</label>
-                                        <input type="text" class="form-control category" name="category" required>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary" form="InsertCategory">Save</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <!-- Modal MultiDelete -->
                 <div class="modal fade" id="MultiDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">ลบหมวดหมู่</h5>
+                                <h5 class="modal-title" id="exampleModalLabel">
+                                    ลบข้อมูล ( Checkbox
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2-square" viewBox="0 0 16 16">
+                                        <path d="M3 14.5A1.5 1.5 0 0 1 1.5 13V3A1.5 1.5 0 0 1 3 1.5h8a.5.5 0 0 1 0 1H3a.5.5 0 0 0-.5.5v10a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5V8a.5.5 0 0 1 1 0v5a1.5 1.5 0 0 1-1.5 1.5H3z"/>
+                                        <path d="m8.354 10.354 7-7a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0z"/>
+                                    </svg> )
+                                </h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body" style="text-align: center;">
@@ -224,44 +206,19 @@
                         </div>
                     </div>
                 </div>
-                <!-- Modal Edit Category -->
-                <div class="modal fade" id="ModalEditCategory" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">แก้ไขชื่อหมวดหมู่</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form action="/EditCategory" class="needs-validation" novalidate method="post" id="EditCategory">
-                                    <div class="mb-3" hidden>
-                                        <label for="message-text" class="col-form-label">id :</label>
-                                        <input id="id-category" type="text" class="form-control category" name="id_category" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="message-text" class="col-form-label">ชื่อสาขา :</label>
-                                        <input id="category-name" type="text" class="form-control category" name="category" required>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary" form="EditCategory">Save</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
 </body>
 
 <script>
-    $(document).on("click", ".edit-category", function () {
-        var id_category = $(this).data('id');
-        var category_name = $(this).data('categoryname');
+    $(document).on("click", ".edit-problem", function () {
+        var id_problem = $(this).data('id');
+        var problem_name = $(this).data('problemname');
+        var problem_detail = $(this).data('problemdetail');
 
-        $('#id-category').val(id_category);
-        $('#category-name').val(category_name);
+        $('#id-problem').val(id_problem);
+        $('#problem-name').val(problem_name);
+        $('#problem-detail').val(problem_detail);
     });
 
     function CheckAll(source) {

@@ -39,6 +39,10 @@
                     <i class="bi bi-cart"></i>
                     อนุมัติรายการ
                 </a>
+                <a class="nav-link position-relative" href="/problem" style="color: #333333;">
+                    <i class="bi bi-exclamation-triangle"></i>
+                    รายการปัญหา
+                </a>
                 <% } else { %>
                     <a class="nav-link" href="/category" style="color: #333333;">
                         <i class="bi bi-bookmarks"></i>
@@ -114,8 +118,8 @@
                         <% Object.values(orders).forEach(function(item){%>
                             <tr>
                                 <td style="text-align: center;"><%= no++ %></td>
-                                <td style="text-align: center; width: 23%;"><%= item.OrderID %></td>
-                                <td style="text-align: center; width: 23%;">
+                                <td style="text-align: center; width: 15%;"><%= item.OrderID %></td>
+                                <td style="width: 15%;">
                                     <% Object.values(item.DeviceID).forEach(function(obj){%>
                                         <% Object.values(device).forEach(function(i){%>
                                             <% if(obj._id.toString() == i._id.toString()){ %>
@@ -124,7 +128,7 @@
                                         <% }) %>
                                     <% }) %>
                                 </td>
-                                <td style="text-align: center;">
+                                <td>
                                     <% Object.values(item.DeviceID).forEach(function(obj){%>
                                         <% Object.values(device).forEach(function(i){%>
                                             <% if(obj._id.toString() == i._id.toString()){ %>
@@ -133,7 +137,7 @@
                                         <% }) %>
                                     <% }) %>
                                 </td>
-                                <td style="text-align: center;">
+                                <td>
                                     <% Object.values(item.DeviceID).forEach(function(obj){%>
                                         <% Object.values(device).forEach(function(i){%>
                                             <% if(obj._id.toString() == i._id.toString()){ %>

@@ -1,0 +1,56 @@
+<div class="modal fade" id="modal-problem" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="color: black;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">รายงานปัญหา</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="insertProblem" action="/insertProblem" method="post">
+                    <div class="mb-3">
+                        <label class="form-label">ชื่อเรื่อง</label>
+                        <input type="text" class="form-control" name="problemName">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">รายละเอียด</label>
+                        <textarea class="form-control" name="problemDetail" rows="5"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-danger" form="insertProblem">รายงาน</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ModalEditProblem" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="color: black;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">รายงานปัญหา</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="EditProblem" action="/EditProblem" method="post">
+                    <input id="id-problem" type="text" name="id" hidden>
+                    <div class="mb-3">
+                        <label class="form-label">ชื่อเรื่อง</label>
+                        <input id="problem-name" type="text" class="form-control" name="problemName" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">รายละเอียด</label>
+                        <textarea id="problem-detail" class="form-control" name="problemDetail" rows="5" readonly></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">รายละเอียดการแก้ไขปัญหา</label>
+                        <textarea class="form-control" name="problemSolving" rows="5"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-danger" form="EditProblem">รายงาน</button>
+            </div>
+        </div>
+    </div>
+</div>
