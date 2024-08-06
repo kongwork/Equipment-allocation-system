@@ -16,6 +16,18 @@ const user_img = multer.diskStorage({
 
 const upload = multer({ storage: user_img })
 
+function generateUniqueID() {
+    let id = '';
+    const characters = '0123456789';
+    const idLength = 10;
+
+    for (let i = 0; i < idLength; i++) {
+        id += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+
+    return id;
+}
+
 router.post("/InsertUser", upload.single("image"), (req, res) => {
     const username = req.body.UserName;
     User.findOne({ UserName: username }).exec((err, doc) => {
@@ -29,6 +41,7 @@ router.post("/InsertUser", upload.single("image"), (req, res) => {
                 return;
             }
             const userData = {
+                UserID: generateUniqueID(),
                 Prefix: req.body.Prefix,
                 FirstName: req.body.FirstName,
                 LastName: req.body.LastName,

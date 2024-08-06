@@ -11,6 +11,7 @@ router.post("/insertProblem", (req, res) => {
         ProblemName: name,
         ProblemDetail: detail,
         ProblemSolving: '',
+        Date: req.body.date,
         Status: '00'
     })
     Problem.saveProblem(data, (err) => {

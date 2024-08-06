@@ -10,6 +10,7 @@ mongoose.connect(dbUrl, {
 
 // design Schema
 let userSchema = mongoose.Schema({
+    UserID: String,
     Prefix: String,
     FirstName: String,
     LastName: String,

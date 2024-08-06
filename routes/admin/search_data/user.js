@@ -5,11 +5,16 @@ const User = require('../../../models/user')
 router.post("/user/search", (req, res) => {
     const showname = req.session.username
     let order = 1
-    let query = { FirstName: { $regex: '^' + req.body.search, $options: 'i' } }
+    let query = { 
+        $or: [
+            { UserID: { $regex: '^' + req.body.search, $options: 'i' } },
+            { FirstName: { $regex: '^' + req.body.search, $options: 'i' } }
+        ]
+    }
     let input_search_null = req.body.search
     if (req.session.login && req.session.typeUser == 'Admin') {
         if (input_search_null === "") {
-            res.redirect("/user")
+            res.redirect("/user") 
         }
         else {
             User.find(query).exec((err, doc) => {

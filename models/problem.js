@@ -14,6 +14,7 @@ let problemSchema = mongoose.Schema({
     ProblemName: String,
     ProblemDetail: String,
     ProblemSolving: String,
+    Date: Date,
     Status: String
 })
 

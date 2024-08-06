@@ -11,6 +11,8 @@ router.get("/problem", (req, res) => {
                     type_user: req.session.typeUser,
                     problems: doc,
                     order: 1,
+                    today: new Date(),
+                    date: new Date(),
                     showname: showname
                 })
             })
@@ -21,6 +23,8 @@ router.get("/problem", (req, res) => {
                     type_user: req.session.typeUser,
                     problems: doc,
                     order: 1,
+                    today: new Date(),
+                    date: new Date(),
                     showname: showname
                 })
             })

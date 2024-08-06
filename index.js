@@ -44,7 +44,8 @@ const routes = [
     require('./routes/user/delete_data/order'),
     require('./routes/user/edit_data/order'),
     require('./routes/user/report/order'),
-    require('./routes/user/report/devices')
+    require('./routes/user/report/devices'),
+    require('./routes/user/report/problem')
 ]
 
 // นำ routes มารวมเป็น middleware
